@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ScriptMe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f2027;
+      --text-color: #ffffff;
+      --accent-color: #00ffc3;
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --input-bg: rgba(255,255,255,0.1);
+    }
+
+    body.light {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --accent-color: #00bfa5;
+      --card-bg: rgba(0, 0, 0, 0.05);
+      --input-bg: rgba(0,0,0,0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background: 
+        linear-gradient(145deg, rgba(15, 32, 39, 0.85), rgba(32, 58, 67, 0.85), rgba(44, 83, 100, 0.85)),
+        url('image.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--text-color);
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--accent-color);
+    }
+
+    nav a {
+      margin-left: 2rem;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active-link {
+      color: var(--accent-color);
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 4px;
+    }
+
+    .theme-toggle-corner {
+      cursor: pointer;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 10px;
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .page {
+      display: none;
+      padding: 4rem 2rem;
+      animation: fadeIn 0.6s ease-in-out;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .page.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 85vh;
+      text-align: center;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2rem 3rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+      margin-top: 2rem;
+      max-width: 700px;
+      width: 100%;
+      color: var(--text-color);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 12px;
+      border: none;
+      background: var(--input-bg);
+      color: var(--text-color);
+    }
+
+    button {
+      padding: 0.8rem 2rem;
+      margin-top: 1.5rem;
+      border: none;
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      box-shadow: 0 0 15px var(--accent-color);
+    }
+
+    button:hover {
+      background-color: #00dab0;
+    }
+
+    .topic-highlight {
+      font-size: 2rem;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 8px var(--accent-color);
+    }
+
+    .subheading {
+      font-size: 1.1rem;
+      color: #ccc;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    .center-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      text-align: left;
+    }
+
+    .feature-title {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
+
+    .feature-desc {
+      color: #ddd;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ScriptMe</div>
+    <nav>
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('login')">Login</a>
+      <a href="#" onclick="showPage('storyboard')">Storyboard</a>
+      <a href="/scriptchat">ScriptChat</a>
+
+    </nav>
+    <button class="theme-toggle-corner" onclick="toggleTheme()" title="Toggle Theme 🌗">🌗</button>
+  </header>
+
+  <div id="home" class="page active">
+    <div class="topic-highlight">AI Movie Script & Storyboard Generator</div>
+    <div class="subheading">
+      Bring your stories to life with AI-powered creativity. Just describe your scene and let ScriptMe do the rest!
+    </div>
+    <div class="card">
+      <strong>Today's Dialog:</strong>
+      <p id="dialogLine" style="margin-top: 0.5rem;"></p>
+    </div>
+    <button onclick="toggleDescription()">Show More</button>
+    <div id="description" class="card hidden">
+      <p>ScriptMe uses the power of generative AI to write cinematic scripts and craft scene-based storyboards. It's made for creators of all levels — no technical knowledge required.</p>
+      <p style="margin-top: 1rem;">Tell your story visually and narratively using our simple tools.</p>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-title">🎬 Storyboard</div>
+        <div class="feature-desc">Transform scenes into visual panels. Add descriptions and generate visual references automatically.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">📝 ScriptChat</div>
+        <div class="feature-desc">Type your movie idea or scene and get a professional script output instantly — complete with dialogue and structure.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">📄 Description</div>
+        <div class="feature-desc">Get in-depth summaries, character outlines, and scene suggestions using AI-powered analysis of your input.</div>
+      </div>
+    </div>
+
+    <div class="center-buttons">
+      <button onclick="showPage('storyboard')">Try Storyboard</button>
+      <button onclick="showPage('script')">Try ScriptChat</button>
+    </div>
+  </div>
+
+  <div id="login" class="page">
+    <h1>Login</h1>
+    <div class="card">
+      <input type="text" placeholder="Username" />
+      <input type="password" placeholder="Password" />
+      <button onclick="validateLogin()">Login</button>
+    </div>
+  </div>
+
+  <div id="storyboard" class="page">
+    <h1>Storyboard</h1>
+    <div class="card">
+      <p>Create and visualize your storyboards here.</p>
+      <textarea placeholder="Describe your scene for storyboard..."></textarea>
+      <button onclick="alert('Storyboard generated (mock)!')">Generate Storyboard</button>
+    </div>
+  </div>
+
+  <div id="script" class="page">
+    <h1>ScriptChat Generator</h1>
+    <div class="card">
+      <p>Enter your plot or scene details to generate a script.</p>
+      <textarea placeholder="Write your movie idea or scene..."></textarea>
+      <button onclick="alert('Script generated (mock)!')">Generate Script</button>
+    </div>
+  </div>
+
+  <script>
+    function showPage(id) {
+      const allPages = document.querySelectorAll('.page');
+      const navLinks = document.querySelectorAll('nav a');
+
+      allPages.forEach(p => p.classList.remove('active'));
+      navLinks.forEach(link => link.classList.remove('active-link'));
+
+      const targetPage = document.getElementById(id);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        const clickedLink = [...navLinks].find(link => link.innerText.toLowerCase().includes(id));
+        if (clickedLink) clickedLink.classList.add('active-link');
+      } else {
+        alert("Page not found.");
+      }
+    }
+
+    function toggleDescription() {
+      document.getElementById('description').classList.toggle('hidden');
+    }
+
+    function validateLogin() {
+      const username = document.querySelector('#login input[type="text"]').value.trim();
+      const password = document.querySelector('#login input[type="password"]').value.trim();
+      if (!username || !password) {
+        alert("Please fill in both fields.");
+      } else {
+        alert("Logged in (mock)!");
+      }
+    }
+
+    const dailyLines = [
+      "Keep your friends close, but your enemies closer.",
+      "Houston, we have a problem.",
+      "Why so serious?",
+      "May the Force be with you.",
+      "I'll be back.",
+      "Whatever you are, be a good one..",
+      "You can't handle the truth!",
+      "I think therefore I am.",
+      "I love the smell of napalm in the morning.",
+      " I have always depended on the kindness of strangers.",
+      "He travels the fastest who travels alone.",
+      "Here's looking at you, kid.",
+      "Genius is one percent inspiration and ninety-nine percent perspiration.",
+      "Go ahead, make my day.",
+      "Keep your friends close, but your enemies closer.",
+      "You must be the change you wish to see in the world."
+    ];
+
+    function showDailyDialogLine() {
+      const today = new Date();
+      const index = today.getDate() % dailyLines.length;
+      document.getElementById("dialogLine").innerText = dailyLines[index];
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+    }
+
+    showDailyDialogLine();
+  </script>
+</body>
+</html>
+login.html
+Displaying login.html.
