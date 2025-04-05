@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ScriptMe Prompt App</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: #eee;
+      padding: 2rem;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      width: 100%;
+    }
+    #response {
+      margin-top: 2rem;
+      white-space: pre-wrap;
+      background: #222;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+  </style>
+  <body style="background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Ffree-backgrounds-photos%2Fblue-film&psig=AOvVaw0I7klUJnin-kArWgHp0D6p&ust=1743958349741000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNis0qKtwYwDFQAAAAAdAAAAABAE'); background-size: cover; background-repeat: no-repeat;">
+  <h1 style="color: white; text-align: center;">ScriptMe Prompt </h1>
+
+  <h1>Ask ScriptMe ✨</h1>
+  <input type="text" id="prompt" placeholder="Ask something like 'What is life?'" />
+  <button onclick="sendPrompt()">Submit</button>
+  <div id="response"></div>
+
+  <script>
+    async function sendPrompt() {
+      const prompt = document.getElementById('prompt').value;
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await res.json();
+      document.getElementById('response').innerText = data.response;
+    }
+  </script>
+  
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ScriptMe Prompt App</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: #eee;
+      padding: 2rem;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      width: 100%;
+    }
+    #response {
+      margin-top: 2rem;
+      white-space: pre-wrap;
+      background: #222;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+  </style>
+  <body style="background-image: url('movieimage.avif'); background-size: cover; background-repeat: no-repeat;">
+  <h1 style="color: white; text-align: center;">ScriptMe Prompt </h1>
+
+  <h1>Ask ScriptMe ✨</h1>
+  <input type="text" id="prompt" placeholder="Ask something like 'What is life?'" />
+  <button onclick="sendPrompt()">Submit</button>
+  <div id="response"></div>
+
+  <script>
+    async function sendPrompt() {
+      const prompt = document.getElementById('prompt').value;
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await res.json();
+      document.getElementById('response').innerText = data.response;
+    }
+  </script>
+  
+</body>
+</html>
